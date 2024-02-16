@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>音声ファイル再生</title>
+</head>
+<body>
+    <p>
+        <input type="text" id="audioUrl" placeholder="音声ファイルのURL">
+        <button onclick="playAudio();">再生</button>
+        <button onclick="pauseAudio();">一時停止</button>
+        <button onclick="playNextTrack();">次の曲</button>
+        <button onclick="playPreviousTrack();">前の曲</button>
+        <button onclick="removeCurrentTrack();">現在の曲を削除</button>
+    </p>
+    <p id="audioTitle"></p>
+    <ul id="titleHistory"></ul>
+
+    <script>
+        const audio = new Audio();
+        const audioUrlInput = document.getElementById("audioUrl");
+        const audioTitleDisplay = document.getElementById("audioTitle");
+        const titleHistoryList = document.getElementById("titleHistory");
+        const playlist = [];
+        let currentTrackIndex = 0;
+
+        function playAudio() {
+            // ユーザーが入力したURLの一部を書き換える
+            const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
+            audio.src = modifiedUrl;
+            audio.play();
+
+            // 音声ファイルのタイトルを取得して表示
+            const title = getTitleFromUrl(modifiedUrl);
+            audioTitleDisplay.textContent = `Now playing: ${title}`;
+
+            // プレイリストに追加
+            playlist.push(modifiedUrl);
+            currentTrackIndex = playlist.length - 1;
+
+            // タイトルの履歴を表示
+            const titleHistoryItem = document.createElement("li");
+            titleHistoryItem.textContent = title;
+            titleHistoryList.appendChild(titleHistoryItem);
+        }
+
+        function pauseAudio() {
+            audio.pause();
+        }
+
+        // URLからタイトルを抽出する関数
+        function getTitleFromUrl(url) {
+            // "?rlkey="以降の文字を無視する
+            const cleanUrl = url.split("?rlkey=")[0];
+            const parts = cleanUrl.split("/");
+            return parts[parts.length - 1];
+        }
+
+        // 次の曲を再生する関数
+        function playNextTrack() {
+            if (currentTrackIndex < playlist.length - 1) {
+                currentTrackIndex++;
+                audio.src = playlist[currentTrackIndex];
+                audio.play();
+                const nextTitle = getTitleFromUrl(playlist[currentTrackIndex]);
+                audioTitleDisplay.textContent = `Now playing: ${nextTitle}`;
+            }
+        }
+
+        // 前の曲を再生する関数
+        function playPreviousTrack() {
+            if (currentTrackIndex > 0) {
+                currentTrackIndex--;
+                audio.src = playlist[currentTrackIndex];
+                audio.play();
+                const prevTitle = getTitleFromUrl(playlist[currentTrackIndex]);
+                audioTitleDisplay.textContent = `Now playing: ${prevTitle}`;
+            }
+        }
+
+        // 現在の曲を削除する関数
+        function removeCurrentTrack() {
+            if (playlist.length > 0) {
+                playlist.splice(currentTrackIndex, 1);
+                if (currentTrackIndex >= playlist.length) {
+                    currentTrackIndex = playlist.length - 1;
+                }
+                if (playlist.length > 0) {
+                    audio.src = playlist[currentTrackIndex];
+                    audio.play();
+                    const currentTitle = getTitleFromUrl(playlist[currentTrackIndex]);
+                    audioTitleDisplay.textContent = `Now playing: ${currentTitle}`;
+                } else {
+                    audio.src = "";
+                    audioTitleDisplay.textContent = "";
+                }
+                updateTitleHistory();
+            }
+        }
+
+        // タイトルの履歴を更新する関数
+        function updateTitleHistory() {
+            titleHistoryList.innerHTML = "";
+            for (const url of playlist) {
+                const title = getTitleFromUrl(url);
+                const titleHistoryItem = document.createElement("li");
+                titleHistoryItem.textContent = title;
+                titleHistoryList.appendChild(titleHistoryItem);
+            }
+        }
+    </script>
+</body>
+</html>
