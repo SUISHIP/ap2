@@ -9,8 +9,8 @@
         <input type="text" id="audioUrl" placeholder="音声ファイルのURL">
         <button onclick="playAudio();">再生</button>
         <button onclick="pauseAudio();">一時停止</button>
-        <button onclick="playNextTrack();">次の曲</button>
         <button onclick="playPreviousTrack();">前の曲</button>
+        <button onclick="playNextTrack();">次の曲</button>
         <button onclick="removeCurrentTrack();">現在の曲を削除</button>
     </p>
     <p id="audioTitle"></p>
@@ -27,6 +27,7 @@
         function playAudio() {
             // ユーザーが入力したURLの一部を書き換える
             const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
+     
             audio.src = modifiedUrl;
             audio.play();
 
