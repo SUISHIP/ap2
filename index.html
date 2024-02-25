@@ -30,7 +30,15 @@
         let currentTrackIndex = 0;
 
         audio.addEventListener('ended', function () {
-            playNextTrack();
+            if (currentTrackIndex < playlist.length - 1) {
+                playNextTrack();
+            } else {
+                currentTrackIndex = 0;
+                audio.src = playlist[currentTrackIndex];
+                audio.play();
+                const nextTitle = getTitleFromUrl(playlist[currentTrackIndex]);
+                audioTitleDisplay.textContent = `Now playing: ${nextTitle}`;
+            }
         });
 
         function playAudio() {
@@ -114,5 +122,13 @@
             audio.volume = volumeSlider.value;
         }
     </script>
+  <details>
+　<summary>EXURL</summary>
+      <h>URLをコピペして試してみよう！</h>
+　　<li>「コペルカクテル」https://www.dropbox.com/scl/fi/ue9gv2dw29051u6adxzv7/.mp3?rlkey=753njs0ojb95zmnhb0b8i6vkv&dl=0</li>
+　　<li>「まちゃプリン」https://www.dropbox.com/scl/fi/8isf6upmzg0v54b1i7qe8/.wav?rlkey=1jesgdenhxgh33v18z4c2r3ir&dl=0</li>
+　　<li>「スノーハース」https://www.dropbox.com/scl/fi/cpd7gmbcghn8nl33iou9a/.mp3?rlkey=wjqqiz672ipv9jfo8eekdtl5u&dl=0</li>
+</details>
+  
 </body>
 </html>
