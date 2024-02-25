@@ -8,12 +8,12 @@
     <p>
         <input type="text" id="audioUrl" placeholder="音声ファイルのURL">
         <button onclick="playAudio();">再生</button>
-        <button onclick="pauseAudio();">一時停止</button>
+        <button onclick="pauseAudio();">停止</button>
         <button onclick="playPreviousTrack();">前の曲</button>
         <button onclick="playNextTrack();">次の曲</button>
-        <button onclick="removeCurrentTrack();">現在の曲を削除</button>
-        <button onclick="loopAudio();">ループ再生</button>
-      <button onclick="fadeAudio();">15minスリープ</button>
+        <button onclick="loopAudio();">ループ</button>
+        <button onclick="removeCurrentTrack();">削除</button>
+        <button onclick="fadeAudio();">15minスリープ</button>
 
 <script>
     function fadeAudio() {
@@ -26,7 +26,7 @@
                     audio.pause();
                 }
             }, 1500);
-        }, 900000);  // 15分後にフェードアウトを開始するスリープタイマー
+        }, 900000);  // 15分後にフェードアウトを開始
     }
 </script>
 
@@ -77,7 +77,7 @@
 
         function loopAudio() {
             audio.loop = !audio.loop;
-            loopStatusDisplay.textContent = audio.loop ? "ループ再生中" : "ループ再生していません";
+            loopStatusDisplay.textContent = audio.loop ? "ループ再生中" : "";
         }
 
         function getTitleFromUrl(url) {
@@ -146,8 +146,7 @@
         <br>ループボタンでシングルループできます。
         <br>最後の曲が再生し終わると最初の曲に戻ります。
         <br>URLを再生するごとにプレイリストに曲が追加されます。
-        <br>音量調節はスライドバーでできます。
-        <br>スリープボタンで、15分後にフェードアウトを開始して停止します。
+        <br>音量調節は右のバーでできます。<br> 
 </details>
     
   <details>
