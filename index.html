@@ -12,19 +12,26 @@
         <button onclick="playPreviousTrack();">前の曲</button>
         <button onclick="playNextTrack();">次の曲</button>
         <button onclick="removeCurrentTrack();">現在の曲を削除</button>
+        <button onclick="loopAudio();">ループ再生</button>
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" onchange="adjustVolume();" value="1">
     </p>
     <p id="audioTitle"></p>
+    <p id="loopStatus"></p>
     <ul id="titleHistory"></ul>
 
     <script>
         const audio = new Audio();
         const audioUrlInput = document.getElementById("audioUrl");
         const audioTitleDisplay = document.getElementById("audioTitle");
+        const loopStatusDisplay = document.getElementById("loopStatus");
         const titleHistoryList = document.getElementById("titleHistory");
         const volumeSlider = document.getElementById("volumeSlider");
         const playlist = [];
         let currentTrackIndex = 0;
+
+        audio.addEventListener('ended', function () {
+            playNextTrack();
+        });
 
         function playAudio() {
             const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
@@ -41,6 +48,11 @@
 
         function pauseAudio() {
             audio.pause();
+        }
+
+        function loopAudio() {
+            audio.loop = !audio.loop;
+            loopStatusDisplay.textContent = audio.loop ? "ループ再生中" : "ループ再生していません";
         }
 
         function getTitleFromUrl(url) {
