@@ -58,18 +58,20 @@
             }
         });
 
-        function playAudio() {
-            const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
-            audio.src = modifiedUrl;
-            audio.play();
-            const title = getTitleFromUrl(modifiedUrl);
-            audioTitleDisplay.textContent = `Now playing: ${title}`;
-            playlist.push(modifiedUrl);
-            currentTrackIndex = playlist.length - 1;
-            const titleHistoryItem = document.createElement("li");
-            titleHistoryItem.textContent = title;
-            titleHistoryList.appendChild(titleHistoryItem);
-        }
+    function playAudio() {
+        const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
+        audio.src = modifiedUrl;
+        audio.volume = 0.5;  // 音量を0.5に設定
+        volumeSlider.value = 0.5;  // スライダーの値も更新
+        audio.play();
+        const title = getTitleFromUrl(modifiedUrl);
+        audioTitleDisplay.textContent = `Now playing: ${title}`;
+        playlist.push(modifiedUrl);
+        currentTrackIndex = playlist.length - 1;
+        const titleHistoryItem = document.createElement("li");
+        titleHistoryItem.textContent = title;
+        titleHistoryList.appendChild(titleHistoryItem);
+    }
 
         function pauseAudio() {
             audio.pause();
