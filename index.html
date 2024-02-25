@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>音声ファイル再生</title>
+    <title>AudioPlay-url</title>
 </head>
 <body>
     <p>
@@ -12,6 +12,7 @@
         <button onclick="playPreviousTrack();">前の曲</button>
         <button onclick="playNextTrack();">次の曲</button>
         <button onclick="removeCurrentTrack();">現在の曲を削除</button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" onchange="adjustVolume();" value="1">
     </p>
     <p id="audioTitle"></p>
     <ul id="titleHistory"></ul>
@@ -21,25 +22,18 @@
         const audioUrlInput = document.getElementById("audioUrl");
         const audioTitleDisplay = document.getElementById("audioTitle");
         const titleHistoryList = document.getElementById("titleHistory");
+        const volumeSlider = document.getElementById("volumeSlider");
         const playlist = [];
         let currentTrackIndex = 0;
 
         function playAudio() {
-            // ユーザーが入力したURLの一部を書き換える
             const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
-     
             audio.src = modifiedUrl;
             audio.play();
-
-            // 音声ファイルのタイトルを取得して表示
             const title = getTitleFromUrl(modifiedUrl);
             audioTitleDisplay.textContent = `Now playing: ${title}`;
-
-            // プレイリストに追加
             playlist.push(modifiedUrl);
             currentTrackIndex = playlist.length - 1;
-
-            // タイトルの履歴を表示
             const titleHistoryItem = document.createElement("li");
             titleHistoryItem.textContent = title;
             titleHistoryList.appendChild(titleHistoryItem);
@@ -49,15 +43,12 @@
             audio.pause();
         }
 
-        // URLからタイトルを抽出する関数
         function getTitleFromUrl(url) {
-            // "?rlkey="以降の文字を無視する
             const cleanUrl = url.split("?rlkey=")[0];
             const parts = cleanUrl.split("/");
             return parts[parts.length - 1];
         }
 
-        // 次の曲を再生する関数
         function playNextTrack() {
             if (currentTrackIndex < playlist.length - 1) {
                 currentTrackIndex++;
@@ -68,7 +59,6 @@
             }
         }
 
-        // 前の曲を再生する関数
         function playPreviousTrack() {
             if (currentTrackIndex > 0) {
                 currentTrackIndex--;
@@ -79,7 +69,6 @@
             }
         }
 
-        // 現在の曲を削除する関数
         function removeCurrentTrack() {
             if (playlist.length > 0) {
                 playlist.splice(currentTrackIndex, 1);
@@ -99,7 +88,6 @@
             }
         }
 
-        // タイトルの履歴を更新する関数
         function updateTitleHistory() {
             titleHistoryList.innerHTML = "";
             for (const url of playlist) {
@@ -108,6 +96,10 @@
                 titleHistoryItem.textContent = title;
                 titleHistoryList.appendChild(titleHistoryItem);
             }
+        }
+
+        function adjustVolume() {
+            audio.volume = volumeSlider.value;
         }
     </script>
 </body>
