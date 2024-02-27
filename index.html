@@ -31,6 +31,7 @@
 </script>
 
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" onchange="adjustVolume();" value="1">
+        <button onclick="adjustVolume();">音量調整</button>
     </p>
     <p id="audioTitle"></p>
     <p id="loopStatus"></p>
@@ -81,7 +82,7 @@
             audio.loop = !audio.loop;
             loopStatusDisplay.textContent = audio.loop ? "ループ再生中" : "";
         }
-
+//GETtitle
         function getTitleFromUrl(url) {
             const cleanUrl = url.split("?rlkey=")[0];
             const parts = cleanUrl.split("/");
@@ -148,7 +149,7 @@
         <br>ループボタンでシングルループできます。
         <br>最後の曲が再生し終わると最初の曲に戻ります。
         <br>URLを再生するごとにプレイリストに曲が追加されます。
-        <br>音量調節は右のバーでできます。<br> 
+        <br>音量調節はスライドバーでできます。<br> 
 </details>
     
   <details>
