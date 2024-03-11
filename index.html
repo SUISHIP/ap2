@@ -6,19 +6,50 @@
 </head>
 <body>
     <p>
-        <input type="text" id="audioUrl" placeholder="音声ファイルのURL">
-        <button onclick="playAudio();">再生</button>
-        <button onclick="pauseAudio();">停止</button>
-        <button onclick="playPreviousTrack();">前の曲</button>
-        <button onclick="playNextTrack();">次の曲</button>
-        <button onclick="loopAudio();">ループ</button>
-        <button onclick="removeCurrentTrack();">削除</button>
-        <button onclick="fadeAudio();">15minスリープ</button>
+        <input type="text" id="audioUrl" placeholder="音声ファイルのURL"style="background: linear-gradient(to right, #FFD5EC, #FFD5EC);">
+        <button onclick="playAudio();"style="background: linear-gradient(to right, white, white);">再生</button>
+        <button onclick="pauseAudio();"style="background: linear-gradient(to right, white, white);">停止</button>
+        <button onclick="playPreviousTrack();"style="background: linear-gradient(to right, white, white);">前の曲</button>
+        <button onclick="playNextTrack();"style="background: linear-gradient(to right, white, white);">次の曲</button>
+        <button id="myButton" onclick=changeColor();loopAudio(); style="background: white;">ループ</button>
+
+<script>
+var colors = ["white", "#FFFF00"]; // 交互に表示したい色を配列に設定
+var currentIndex = 0;
+
+function changeColor() {
+    currentIndex = currentIndex < colors.length - 1 ? currentIndex + 1 : 0;
+    document.getElementById('myButton').style.background = colors[currentIndex];
+}
+</script>
+        <button onclick="removeCurrentTrack();"style="background: linear-gradient(to right, white, white);">削除</button>
+        <button onclick="fadeAudio();"style="background: linear-gradient(to right, white, white);">15minスリープ</button>
+        <p id="timer"></p>
 
 <script>
     function fadeAudio() {
+        // 既存のタイマーをクリア
+        if (typeof countdown !== 'undefined') {
+            clearInterval(countdown);
+        }
+        if (typeof fadeAudio !== 'undefined') {
+            clearInterval(fadeAudio);
+        }
+
+        let timeLeft = 900; // 15 minutes in seconds
+        const timerElement = document.getElementById("timer");
+        timerElement.textContent = `残り時間: ${timeLeft}秒`;
+
+        countdown = setInterval(function() {
+            timeLeft--;
+            timerElement.textContent = `残り時間: ${timeLeft}秒`;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+
         setTimeout(function() {
-            let fadeAudio = setInterval(function () {
+            fadeAudio = setInterval(function () {
                 if (audio.volume > 0.1) {
                     audio.volume -= 0.1;
                 } else {
@@ -80,7 +111,7 @@
 
         function loopAudio() {
             audio.loop = !audio.loop;
-            loopStatusDisplay.textContent = audio.loop ? "ループ再生中" : "";
+            loopStatusDisplay.textContent = audio.loop ? "１曲ループ再生中🎵" : "";
         }
 //GETtitle
         function getTitleFromUrl(url) {
@@ -142,8 +173,8 @@
             audio.volume = volumeSlider.value;
         }
     </script>
-    <details>
-　<summary>説明</summary>
+    <details id="Deployment1">
+      <summary><b>説明</b></summary>
         <br>主にDropboxの共有用URLに対応しています。
         <br>URLを入力してファイルの音声を再生できます。
         <br>ループボタンでシングルループできます。
@@ -151,17 +182,39 @@
         <br>URLを再生するごとにプレイリストに曲が追加されます。
         <br>音量調節はスライドバーでできます。<br> 
 </details>
-    
-  <details>
-　<summary>EXURL</summary>
-      <br>
-      <h>URLをコピペして試してみよう！</h>
- <li>「MEGALOVANIA」https://www.dropbox.com/scl/fi/z2go7xfot0yq0cvilyj71/UNDERTALE-MEGALOVANIA.mp3?rlkey=u1nwkmas8iyi6ujgrgkimigyc&dl=0</li>
-　　<li>「コペルカクテル」https://www.dropbox.com/scl/fi/ue9gv2dw29051u6adxzv7/コペルカクテル.mp3?rlkey=753njs0ojb95zmnhb0b8i6vkv&dl=0</li>
-　　<li>「まちゃプリン」https://www.dropbox.com/scl/fi/8isf6upmzg0v54b1i7qe8/まちゃプリン.wav?rlkey=1jesgdenhxgh33v18z4c2r3ir&dl=0</li>
-　　<li>「スノーハース」https://www.dropbox.com/scl/fi/cpd7gmbcghn8nl33iou9a/スノーハース.mp3?rlkey=wjqqiz672ipv9jfo8eekdtl5u&dl=0</li>
-      <br> 
-</details>
+    <style>
+    #Deployment1 {
+        background-color: #7fffd4;
+        width: 450px;
+    }
+</style>
   
+  <details id="Deployment2">
+    <summary><b>EXURL</b></summary>
+      <br>
+    <h><font color="#3333FF"><b>URL</b></font>をコピペして試してみよう！</h>
+ <li>「MEGALOVANIA」<input type="text" id="myInput1" value="https://www.dropbox.com/scl/fi/z2go7xfot0yq0cvilyj71/UNDERTALE-MEGALOVANIA.mp3?rlkey=u1nwkmas8iyi6ujgrgkimigyc&dl=0" readonly onclick="copyToClipboard('myInput1')"style="width: 100px; float: right;color: #3399FF">
+
+<li>「コペルカクテル」<input type="text" id="myInput2" value="https://www.dropbox.com/scl/fi/ue9gv2dw29051u6adxzv7/コペルカクテル.mp3?rlkey=753njs0ojb95zmnhb0b8i6vkv&dl=0" readonly onclick="copyToClipboard('myInput2')"style="width: 100px; float: right;color: #3399FF">
+
+<li>「まちゃプリン」<input type="text" id="myInput3" value="https://www.dropbox.com/scl/fi/8isf6upmzg0v54b1i7qe8/まちゃプリン.wav?rlkey=1jesgdenhxgh33v18z4c2r3ir&dl=0" readonly onclick="copyToClipboard('myInput3')"style="width: 100px; float: right;color: #3399FF">
+
+<li>「スノーハース」<input type="text" id="myInput4" value="https://www.dropbox.com/scl/fi/cpd7gmbcghn8nl33iou9a/スノーハース.mp3?rlkey=wjqqiz672ipv9jfo8eekdtl5u&dl=0" readonly onclick="copyToClipboard('myInput4')"style="width: 100px; float: right;color: #3399FF">
+
+<script>
+    function copyToClipboard(id) {
+        const inputElement = document.getElementById(id);
+        inputElement.select();
+        document.execCommand("copy");
+    }
+</script>
+<br><b>※クリックでコピーできます</b>
+</details>
+  <style>
+    #Deployment2 {
+        background-color: #FFCC33;
+        width: 450px;
+    }
+</style>
 </body>
 </html>
