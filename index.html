@@ -29,9 +29,9 @@
         }, 900000);  // 15分後にフェードアウトを開始
     }
 </script>
-
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" onchange="adjustVolume();" value="1">
-        <button onclick="adjustVolume();">音量調整</button>
+<!-- 音量スライダー -->
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" onchange="adjustVolume();" value="0.5">
+<!-- TEXTアウトプット -->
     </p>
     <p id="audioTitle"></p>
     <p id="loopStatus"></p>
@@ -62,8 +62,8 @@
     function playAudio() {
         const modifiedUrl = audioUrlInput.value.replace("https://www.dropbox.com/scl/fi/", "https://dl.dropboxusercontent.com/scl/fi/");
         audio.src = modifiedUrl;
-        audio.volume = 0.5;  // 音量を0.5に設定
-        volumeSlider.value = 0.5;  // スライダーの値も更新
+        audio.volume = 0.5;  // 再生時の音量を0.5に設定
+        volumeSlider.value = 0.5;  // スライダーの値も0.5に更新
         audio.play();
         const title = getTitleFromUrl(modifiedUrl);
         audioTitleDisplay.textContent = `Now playing: ${title}`;
@@ -156,9 +156,10 @@
 　<summary>EXURL</summary>
       <br>
       <h>URLをコピペして試してみよう！</h>
-　　<li>「コペルカクテル」https://www.dropbox.com/scl/fi/ue9gv2dw29051u6adxzv7/.mp3?rlkey=753njs0ojb95zmnhb0b8i6vkv&dl=0</li>
-　　<li>「まちゃプリン」https://www.dropbox.com/scl/fi/8isf6upmzg0v54b1i7qe8/.wav?rlkey=1jesgdenhxgh33v18z4c2r3ir&dl=0</li>
-　　<li>「スノーハース」https://www.dropbox.com/scl/fi/cpd7gmbcghn8nl33iou9a/.mp3?rlkey=wjqqiz672ipv9jfo8eekdtl5u&dl=0</li>
+ <li>「MEGALOVANIA」https://www.dropbox.com/scl/fi/z2go7xfot0yq0cvilyj71/UNDERTALE-MEGALOVANIA.mp3?rlkey=u1nwkmas8iyi6ujgrgkimigyc&dl=0</li>
+　　<li>「コペルカクテル」https://www.dropbox.com/scl/fi/ue9gv2dw29051u6adxzv7/コペルカクテル.mp3?rlkey=753njs0ojb95zmnhb0b8i6vkv&dl=0</li>
+　　<li>「まちゃプリン」https://www.dropbox.com/scl/fi/8isf6upmzg0v54b1i7qe8/まちゃプリン.wav?rlkey=1jesgdenhxgh33v18z4c2r3ir&dl=0</li>
+　　<li>「スノーハース」https://www.dropbox.com/scl/fi/cpd7gmbcghn8nl33iou9a/スノーハース.mp3?rlkey=wjqqiz672ipv9jfo8eekdtl5u&dl=0</li>
       <br> 
 </details>
   
