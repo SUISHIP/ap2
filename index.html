@@ -2,19 +2,31 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
     <title>AudioPlay-url</title>
 </head>
 <body>
     <p>
         <input type="text" id="audioUrl" placeholder="音声ファイルのURL"style="background: linear-gradient(to right, #FFD5EC, #FFD5EC);">
-        <button onclick="playAudio();"style="background: linear-gradient(to right, white, white);">再生</button>
-        <button onclick="pauseAudio();"style="background: linear-gradient(to right, white, white);">停止</button>
-        <button onclick="playPreviousTrack();"style="background: linear-gradient(to right, white, white);">前の曲</button>
-        <button onclick="playNextTrack();"style="background: linear-gradient(to right, white, white);">次の曲</button>
-        <button id="myButton" onclick=changeColor();loopAudio(); style="background: white;">ループ</button>
-
+        <button onclick="playAudio();"style="background: 
+aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">再生</button>
+        <button onclick="pauseAudio();"style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">停止</button>
+        <button onclick="playPreviousTrack();"style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">前の曲</button>
+        <button onclick="playNextTrack();"style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">次の曲</button>
+        <button id="myButton" onclick=changeColor();loopAudio(); style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">ループ</button>
+<!-- ボタンAudio集 -->
+<audio id="btn_audio">
+    <source src="https://dl.dropboxusercontent.com/scl/fi/tdinuouc3wxglh90cbkzp/button.mp3?rlkey=8fxww1j72qevx13b9kdaux4e2" type="audio/mp3">
+</audio>
+<audio id="btn_audio2">
+    <source src="https://dl.dropboxusercontent.com/scl/fi/5ndbgsqg1oyy36idfpdjy/button2.mp3?rlkey=h9t3r7nknjc1srok6cfemyo7f" type="audio/mp3">
+</audio>
+<audio id="btn_audio3">
+    <source src="https://dl.dropboxusercontent.com/scl/fi/icy0b93chnq4lvf2tjecl/button3.mp3?rlkey=3a9p93k97p3iow2gvmm7vlb81" type="audio/mp3">
+</audio>
+<!-- ボタンAudio集END -->
 <script>
-var colors = ["white", "#FFFF00"]; // 交互に表示したい色を配列に設定
+var colors = ["aliceblue", "#FFFF00"]; // 交互に表示したい色を配列に設定
 var currentIndex = 0;
 
 function changeColor() {
@@ -22,12 +34,13 @@ function changeColor() {
     document.getElementById('myButton').style.background = colors[currentIndex];
 }
 </script>
-        <button onclick="removeCurrentTrack();"style="background: linear-gradient(to right, white, white);">削除</button>
-        <button onclick="fadeAudio();"style="background: linear-gradient(to right, white, white);">15minスリープ</button>
+        <button onclick="removeCurrentTrack();"style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">削除</button>
+        <button id="myButton2" onclick="fadeAudio();"style="background: aliceblue;border: 2px solid gray;border-right-color: black;border-bottom-color: black;">15minスリープ</button>
         <p id="timer"></p>
-
 <script>
     function fadeAudio() {
+document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio').play(); //クリックしたら音を再生
         // 既存のタイマーをクリア
         if (typeof countdown !== 'undefined') {
             clearInterval(countdown);
@@ -103,17 +116,23 @@ function changeColor() {
         const titleHistoryItem = document.createElement("li");
         titleHistoryItem.textContent = title;
         titleHistoryList.appendChild(titleHistoryItem);
-    }
+    document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio').play(); //クリックしたら音を再生
+}
 
         function pauseAudio() {
             audio.pause();
-        }
+        document.getElementById('btn_audio2').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio2').play(); //クリックしたら音を再生
+}
 
         function loopAudio() {
             audio.loop = !audio.loop;
             loopStatusDisplay.textContent = audio.loop ? "１曲ループ再生中🎵" : "";
-        }
-//GETtitle
+        document.getElementById('btn_audio3').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio3').play(); //クリックしたら音を再生
+}
+//GETtitle,urlの変形
         function getTitleFromUrl(url) {
             const cleanUrl = url.split("?rlkey=")[0];
             const parts = cleanUrl.split("/");
@@ -127,7 +146,9 @@ function changeColor() {
                 audio.play();
                 const nextTitle = getTitleFromUrl(playlist[currentTrackIndex]);
                 audioTitleDisplay.textContent = `Now playing: ${nextTitle}`;
-            }
+            document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio').play(); //クリックしたら音を再生
+}
         }
 
         function playPreviousTrack() {
@@ -137,7 +158,9 @@ function changeColor() {
                 audio.play();
                 const prevTitle = getTitleFromUrl(playlist[currentTrackIndex]);
                 audioTitleDisplay.textContent = `Now playing: ${prevTitle}`;
-            }
+            document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio').play(); //クリックしたら音を再生
+}
         }
 
         function removeCurrentTrack() {
@@ -145,7 +168,9 @@ function changeColor() {
                 playlist.splice(currentTrackIndex, 1);
                 if (currentTrackIndex >= playlist.length) {
                     currentTrackIndex = playlist.length - 1;
-                }
+                document.getElementById('btn_audio2').currentTime = 0; //連続クリックに対応
+    document.getElementById('btn_audio2').play(); //クリックしたら音を再生
+}
                 if (playlist.length > 0) {
                     audio.src = playlist[currentTrackIndex];
                     audio.play();
